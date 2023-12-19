@@ -1,0 +1,46 @@
+<!--reglog.html-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration</title>
+</head>
+<body>
+
+<div id="registrationForm">
+  <h2>Registration/h2>
+  <label for="username">User name:</label>
+  <input type="text" id="username" required>
+  <label for="password">Password:</label>
+  <input type="password" id="password" required>
+  <button onclick="register()">Take registration</button>
+</div>
+
+<script>
+function register() {
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+
+  // Отправляем данные на сервер
+  fetch('http://localhost:80/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ username, password }),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    alert(data.message);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('Произошла ошибка');
+  });
+}
+</script>
+
+</body>
+</html>
